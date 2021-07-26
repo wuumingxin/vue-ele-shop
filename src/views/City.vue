@@ -27,6 +27,7 @@
           class="item"
           v-for="(item, index) in searchHistoryList"
           :key="index"
+          @click="goMsite(index, true)"
         >
           <div>{{ item.name }}</div>
           <p>{{ item.address }}</p>
@@ -99,10 +100,13 @@ export default {
       // 隐藏历史搜索结果，为了展示搜索结果
       this.isShowSearchHistory = false
     },
-    goMsite (num) {
-      this.searchHistoryList.push(this.searchResultList[num])
-      localStorage.setItem('searchHistoryList', JSON.stringify(this.searchHistoryList))
-      console.log(this.searchHistoryList)
+    goMsite (num, isHistory = false) {
+      if (isHistory === false) {
+        this.searchHistoryList.push(this.searchResultList[num])
+        localStorage.setItem('searchHistoryList', JSON.stringify(this.searchHistoryList))
+        console.log(this.searchHistoryList)
+      }
+      this.$router.push({ path: '/msite' })
     },
     // 初始化
     init () {

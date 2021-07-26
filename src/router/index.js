@@ -26,6 +26,16 @@ const routes = [
     path: '/city/:cityid',
     name: 'City',
     component: () => import(/* webpackChunkName: "about" */ '../views/City.vue')
+  },
+  {
+    path: '/msite',
+    name: 'Msite',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Msite.vue')
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Search.vue')
   }
 ]
 

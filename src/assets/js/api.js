@@ -34,3 +34,15 @@ export const groupcity = () => {
 export const queryaddress = (data) => {
   return get('/api2/v1/pois', data)
 }
+
+// 获取食品分类列表
+
+export const foodclass = (data) => {
+  return get('/api2/v2/index_entry', data)
+}
+
+// 获取食品分类列表
+
+export const shoppinglist = (data) => {
+  return get('/api2/shopping/restaurants', data)
+}

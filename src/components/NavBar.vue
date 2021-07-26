@@ -2,6 +2,7 @@
   <!-- 导航栏 -->
   <div class="nav-bar">
     <slot name="nav-home"></slot>
+    <slot name="nav-search"></slot>
     <slot name="nav-login"></slot>
 
     <slot name="nav-goback"></slot>
