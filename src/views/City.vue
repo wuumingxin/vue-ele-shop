@@ -27,7 +27,7 @@
           class="item"
           v-for="(item, index) in searchHistoryList"
           :key="index"
-          @click="goMsite(index, true)"
+          @click="goMsite(index, true, item.latitude, item.longitude)"
         >
           <div>{{ item.name }}</div>
           <p>{{ item.address }}</p>
@@ -45,7 +45,7 @@
           class="item"
           v-for="(item, index) in searchResultList"
           :key="index"
-          @click="goMsite(index)"
+          @click="goMsite(index, false, item.latitude, item.longitude)"
         >
           <div>{{ item.name }}</div>
           <p>{{ item.address }}</p>
@@ -100,13 +100,13 @@ export default {
       // 隐藏历史搜索结果，为了展示搜索结果
       this.isShowSearchHistory = false
     },
-    goMsite (num, isHistory = false) {
+    goMsite (num, isHistory = false, lat, lon) {
       if (isHistory === false) {
         this.searchHistoryList.push(this.searchResultList[num])
         localStorage.setItem('searchHistoryList', JSON.stringify(this.searchHistoryList))
         console.log(this.searchHistoryList)
       }
-      this.$router.push({ path: '/msite' })
+      this.$router.push({ path: '/msite', query: { latitude: lat, longitude: lon } })
     },
     // 初始化
     init () {

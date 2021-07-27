@@ -30,7 +30,7 @@ export const groupcity = () => {
   })
 }
 
-// 获取所有城市
+// 查询地址
 export const queryaddress = (data) => {
   return get('/api2/v1/pois', data)
 }

@@ -59,33 +59,69 @@
       <div class="title">
         <img src="../assets/image/附近商店.png" alt="" /><span>附近商家</span>
       </div>
-      <div class="shop-item">
+      <div class="shop-item" v-for="(item, index) in shoppingList" :key="index">
         <div class="shop-img">
-          <img src="../assets/image/shop-img.jpg" />
+          <img :src="shoppingImageUrl + item.image_path" loading="lazy" />
         </div>
         <div class="shop-info">
           <div class="info1 info">
             <div class="left">
-              <span class="span1">品牌</span><span class="span2">效果演示</span>
+              <span class="span1">品牌</span
+              ><span class="span2">{{ item.name }}</span>
             </div>
             <div class="right">
-              <span>保</span><span>保</span><span>保</span>
+              <span v-for="(supitem, index) in item.supports" :key="index">{{
+                supitem.icon_name
+              }}</span>
             </div>
           </div>
           <div class="info2 info">
             <div class="left"></div>
             <div class="right">
-              <span class="span1">蜂鸟快送</span>
+              <span class="span1" v-show="item.delivery_mode">蜂鸟转送</span>
               <span class="span2">准时达</span>
             </div>
           </div>
           <div class="info3 info">
-            <div class="left">￥20起送/配送费￥5</div>
-            <div class="right">906公里/<span>9小时47分钟</span></div>
+            <div class="left">
+              ￥{{ item.float_minimum_order_amount }}起送/{{
+                item.piecewise_agent_fee.tips
+              }}
+            </div>
+            <div class="right">
+              {{ item.distance }}/<span>{{ item.order_lead_time }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- 底部 -->
+    <p v-if="hasShopData" class="empty_data">没有更多了</p>
+    <aside class="return_top" @click="backTop" v-if="showBackStatus">
+      <div class="back_top_svg"></div>
+    </aside>
+
+    <!-- 底部导航栏 -->
+    <div class="footer-nav">
+      <div>
+        <img src="../assets/image/我的.png" alt="" />
+        <p>外卖</p>
+      </div>
+      <div>
+        <img src="../assets/image/我的.png" alt="" />
+        <p>外卖</p>
+      </div>
+      <div>
+        <img src="../assets/image/我的.png" alt="" />
+        <p>外卖</p>
+      </div>
+      <div>
+        <img src="../assets/image/我的.png" alt="" />
+        <p>外卖</p>
+      </div>
+    </div>
+    <!-- loading -->
+    <loading v-show="isLoading" />
   </div>
 </template>
 
@@ -94,6 +130,7 @@ import NavBar from '../components/NavBar.vue'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import { foodclass, shoppinglist } from '../assets/js/api'
+import loading from '../components/loading.vue'
 
 export default {
   data () {
@@ -112,13 +149,29 @@ export default {
         }
       },
       foodClassList: [],
-      foodClassImageUrl: 'https://fuss10.elemecdn.com'
+      foodClassImageUrl: 'https://fuss10.elemecdn.com',
+      shoppingImageUrl: 'https://elm.cangdu.org/img/',
+      latitude: '',
+      longitude: '',
+      offset: 0,
+      limit: 20,
+      shoppingList: [],
+      // 是否还有数据
+      hasShopData: false,
+      // 是否加载中
+      isLoading: true,
+      // 防止重复提交，
+      isRequesting: false,
+      // 回到顶部按钮
+      showBackStatus: false
+
     }
   },
   components: {
     NavBar,
     swiper,
-    swiperSlide
+    swiperSlide,
+    loading
   },
   computed: {
   },
@@ -146,8 +199,48 @@ export default {
     async getShopping () {
       // latitude/longitude/offset/limit
       // 经度、纬度、跳过多少条数据默认0、请求数量默认20
-      const res = await shoppinglist()
-      console.log(res)
+      const queryData = { latitude: this.latitude, longitude: this.longitude, offset: this.offset, limit: this.limit }
+      const res = await shoppinglist(queryData)
+      this.isLoading = false
+      console.log(res, 'aabb')
+      this.shoppingList = res
+      if (res.length < 20) {
+        this.hasShopData = true
+      }
+    },
+    async scrollGetShop () {
+      if (this.hasShopData) {
+        return
+      }
+      if (this.isRequesting) {
+        return
+      }
+
+      this.isLoading = true
+      this.isRequesting = true
+      this.offset += 20
+      const queryData = { latitude: this.latitude, longitude: this.longitude, offset: this.offset, limit: this.limit }
+      const res = await shoppinglist(queryData)
+      this.isLoading = false
+      console.log(this.offset, res, 'dddddd')
+      this.shoppingList.push(...res)
+      if (res.length < 20) {
+        this.hasShopData = true
+      }
+      this.isRequesting = false
+    },
+    // 返回顶部
+    backTop () {
+      // alert('1111')
+      // animate(document.body, { scrollTop: '0' }, 400, 'ease-out')
+      // document.documentElement.scrollTop = 0
+      // 返回顶部简易动画效果
+      const timeTop = window.setInterval(() => {
+        document.documentElement.scrollTop = document.documentElement.scrollTop - 50
+        if (document.documentElement.scrollTop === 0) {
+          clearInterval(timeTop)
+        }
+      }, 10)
     }
   },
   mounted () {
@@ -155,6 +248,31 @@ export default {
       this.foodClassList = res
       console.log(this.foodClassList)
     })
+    this.latitude = this.$route.query.latitude
+    this.longitude = this.$route.query.longitude
+    // 获取店铺数据
+    this.getShopping()
+
+    window.addEventListener('scroll', () => {
+      // 根据距离页面底部距离是否请求数据
+      const bottomHeight = document.documentElement.scrollHeight - document.documentElement.scrollTop - document.body.clientHeight
+      // console.log(bottomHeight)
+      if (bottomHeight < 30) {
+        // 防止重复执行请求
+        console.log('scroll', bottomHeight)
+        if (!this.isLoading) {
+          // console.log('小于50')
+          this.scrollGetShop()
+        }
+      }
+      if (document.documentElement.scrollTop > 500) {
+        this.showBackStatus = true
+      } else {
+        this.showBackStatus = false
+      }
+    }
+
+    )
   }
 }
 </script>
@@ -336,6 +454,49 @@ export default {
           }
         }
       }
+    }
+  }
+}
+
+// 回到顶部按钮
+.return_top {
+  position: fixed;
+  bottom: 3rem;
+  right: 1rem;
+  .back_top_svg {
+    width: 2rem;
+    height: 2rem;
+    background-color: green;
+  }
+}
+
+.empty_data {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.footer-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  height: 45px;
+  box-shadow: 0 -0.02667rem 0.05333rem rgba(0, 0, 0, 0.1);
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+    p {
+      font-size: 11px;
     }
   }
 }
