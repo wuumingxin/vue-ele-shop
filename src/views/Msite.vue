@@ -241,20 +241,8 @@ export default {
           clearInterval(timeTop)
         }
       }, 10)
-    }
-  },
-  mounted () {
-    this.getFoodClass().then(res => {
-      this.foodClassList = res
-      console.log(this.foodClassList)
-    })
-    this.latitude = this.$route.query.latitude
-    this.longitude = this.$route.query.longitude
-    this.addressName = this.$route.query.name
-    // 获取店铺数据
-    this.getShopping()
-    var scrollFun = () => {
-      // 根据距离页面底部距离是否请求数据
+    },
+    scrollFun () {
       const bottomHeight = document.documentElement.scrollHeight - document.documentElement.scrollTop - document.body.clientHeight
       // console.log(bottomHeight)
       if (bottomHeight < 30) {
@@ -271,7 +259,36 @@ export default {
         this.showBackStatus = false
       }
     }
-    window.addEventListener('scroll', scrollFun
+  },
+  mounted () {
+    this.getFoodClass().then(res => {
+      this.foodClassList = res
+      console.log(this.foodClassList)
+    })
+    this.latitude = this.$route.query.latitude
+    this.longitude = this.$route.query.longitude
+    this.addressName = this.$route.query.name
+    // 获取店铺数据
+    this.getShopping()
+    // var scrollFun = () => {
+    //   // 根据距离页面底部距离是否请求数据
+    //   const bottomHeight = document.documentElement.scrollHeight - document.documentElement.scrollTop - document.body.clientHeight
+    //   // console.log(bottomHeight)
+    //   if (bottomHeight < 30) {
+    //     // 防止重复执行请求
+    //     console.log('scroll', bottomHeight)
+    //     if (!this.isLoading) {
+    //       // console.log('小于50')
+    //       this.scrollGetShop()
+    //     }
+    //   }
+    //   if (document.documentElement.scrollTop > 500) {
+    //     this.showBackStatus = true
+    //   } else {
+    //     this.showBackStatus = false
+    //   }
+    // }
+    window.addEventListener('scroll', this.scrollFun
     )
 
     // this.$nextTick(() => {
@@ -297,7 +314,7 @@ export default {
     // })
   },
   beforeDestroy () {
-    // window.removeEventListener('scroll', scrollFun)
+    window.removeEventListener('scroll', this.scrollFun)
   }
 }
 </script>
