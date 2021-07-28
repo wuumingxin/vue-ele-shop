@@ -41,8 +41,14 @@ export const foodclass = (data) => {
   return get('/api2/v2/index_entry', data)
 }
 
-// 获取食品分类列表
+// 获取商家列表
 
 export const shoppinglist = (data) => {
   return get('/api2/shopping/restaurants', data)
+}
+
+// 搜索餐馆
+
+export const searchShopping = (data) => {
+  return get('/api2/v4/restaurants', data)
 }

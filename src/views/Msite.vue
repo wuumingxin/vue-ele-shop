@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class="msite">
     <nav-bar>
       <div class="nav-search" slot="nav-search" @click="goSearch">
         <img src="../assets/image/search.png" alt="" />
       </div>
-      <div class="nav-title" slot="nav-title" @click="goHome">外滩</div>
+      <div class="nav-title" slot="nav-title" @click="goHome">
+        {{ addressName }}
+      </div>
       <div class="nav-login" slot="nav-login" @click="goLogin">登录|注册</div>
     </nav-bar>
     <!-- 轮播图 -->
@@ -76,7 +78,16 @@
             </div>
           </div>
           <div class="info2 info">
-            <div class="left"></div>
+            <div class="left">
+              <van-rate
+                v-model="item.rating"
+                size="11"
+                color="#ff6000"
+                readonly
+              />
+              <span class="rating_num">{{ item.rating }}</span>
+              <span class="buy-num">月售{{ item.recent_order_num }}单</span>
+            </div>
             <div class="right">
               <span class="span1" v-show="item.delivery_mode">蜂鸟转送</span>
               <span class="span2">准时达</span>
@@ -102,24 +113,7 @@
     </aside>
 
     <!-- 底部导航栏 -->
-    <div class="footer-nav">
-      <div>
-        <img src="../assets/image/我的.png" alt="" />
-        <p>外卖</p>
-      </div>
-      <div>
-        <img src="../assets/image/我的.png" alt="" />
-        <p>外卖</p>
-      </div>
-      <div>
-        <img src="../assets/image/我的.png" alt="" />
-        <p>外卖</p>
-      </div>
-      <div>
-        <img src="../assets/image/我的.png" alt="" />
-        <p>外卖</p>
-      </div>
-    </div>
+    <tab-bar></tab-bar>
     <!-- loading -->
     <loading v-show="isLoading" />
   </div>
@@ -127,10 +121,13 @@
 
 <script>
 import NavBar from '../components/NavBar.vue'
+import TabBar from '../components/TabBar.vue'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import { foodclass, shoppinglist } from '../assets/js/api'
 import loading from '../components/loading.vue'
+import Rate from 'vant/lib/rate'
+import 'vant/lib/rate/style'
 
 export default {
   data () {
@@ -153,6 +150,7 @@ export default {
       shoppingImageUrl: 'https://elm.cangdu.org/img/',
       latitude: '',
       longitude: '',
+      addressName: '',
       offset: 0,
       limit: 20,
       shoppingList: [],
@@ -169,9 +167,11 @@ export default {
   },
   components: {
     NavBar,
+    TabBar,
     swiper,
     swiperSlide,
-    loading
+    loading,
+    [Rate.name]: Rate
   },
   computed: {
   },
@@ -250,10 +250,10 @@ export default {
     })
     this.latitude = this.$route.query.latitude
     this.longitude = this.$route.query.longitude
+    this.addressName = this.$route.query.name
     // 获取店铺数据
     this.getShopping()
-
-    window.addEventListener('scroll', () => {
+    var scrollFun = () => {
       // 根据距离页面底部距离是否请求数据
       const bottomHeight = document.documentElement.scrollHeight - document.documentElement.scrollTop - document.body.clientHeight
       // console.log(bottomHeight)
@@ -271,8 +271,33 @@ export default {
         this.showBackStatus = false
       }
     }
-
+    window.addEventListener('scroll', scrollFun
     )
+
+    // this.$nextTick(() => {
+    //   document.querySelector('.msite').addEventListener('scroll', () => {
+    //     // 根据距离页面底部距离是否请求数据
+    //     const bottomHeight = document.documentElement.scrollHeight - document.documentElement.scrollTop - document.body.clientHeight
+    //     // console.log(bottomHeight)
+    //     if (bottomHeight < 30) {
+    //       // 防止重复执行请求
+    //       console.log('scroll', bottomHeight)
+    //       if (!this.isLoading) {
+    //         // console.log('小于50')
+    //         this.scrollGetShop()
+    //       }
+    //     }
+    //     if (document.documentElement.scrollTop > 500) {
+    //       this.showBackStatus = true
+    //     } else {
+    //       this.showBackStatus = false
+    //     }
+    //   }
+    //   )
+    // })
+  },
+  beforeDestroy () {
+    // window.removeEventListener('scroll', scrollFun)
   }
 }
 </script>
@@ -417,7 +442,15 @@ export default {
       }
       .info2 {
         .left {
-          font-size: 12px;
+          .rating_num {
+            color: #ff6000;
+            font-size: 9px;
+            margin: 0 5px 0 3px;
+          }
+          .buy-num {
+            font-size: 9px;
+            color: #666;
+          }
         }
         .right {
           .span1 {
@@ -473,31 +506,5 @@ export default {
 .empty_data {
   text-align: center;
   margin-bottom: 48px;
-}
-
-.footer-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: space-around;
-  background-color: #fff;
-  height: 45px;
-  box-shadow: 0 -0.02667rem 0.05333rem rgba(0, 0, 0, 0.1);
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-
-    img {
-      width: 20px;
-      height: 20px;
-    }
-    p {
-      font-size: 11px;
-    }
-  }
 }
 </style>
