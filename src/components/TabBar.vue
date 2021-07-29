@@ -1,10 +1,10 @@
 <template>
   <div class="footer-nav">
-    <div>
+    <div @click="goMsite">
       <van-icon name="home-o" color="#1989fa" size="20" />
       <p>外卖</p>
     </div>
-    <div>
+    <div @click="goSearch">
       <van-icon name="search" color="#1989fa" size="20" />
       <p>搜索</p>
     </div>
@@ -23,6 +23,8 @@
 import Icon from 'vant/lib/icon'
 import 'vant/lib/icon/style'
 
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
@@ -31,6 +33,20 @@ export default {
   },
   components: {
     [Icon.name]: Icon
+  },
+  methods: {
+    goSearch () {
+      this.$router.push({ path: '/search' })
+    },
+    goMsite () {
+      this.$router.push({ path: '/msite', query: { latitude: this.geohash.split(',')[0], longitude: this.geohash.split(',')[1], name: this.name } })
+    }
+  },
+  computed: {
+    ...mapState([
+      'geohash',
+      'name'
+    ])
   }
 
 }

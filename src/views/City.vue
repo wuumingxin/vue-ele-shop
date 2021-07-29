@@ -125,7 +125,7 @@ export default {
         console.log(this.searchHistoryList)
       }
       this.$router.push({ path: '/msite', query: { latitude: lat, longitude: lon, name: name } })
-      this.$store.commit('SETGEOHASH', { geohash: geohash })
+      this.$store.commit('SETGEOHASH', { geohash: geohash, name: name })
     },
     // 初始化
     init () {

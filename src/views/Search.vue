@@ -10,7 +10,7 @@
     <div class="food-search">
       <input
         type="text"
-        v-model="inputfood"
+        v-model.trim="inputfood"
         placeholder="请输入商家或美食名称"
       />
       <div class="food-search-btn" @click="searchFood">提交查询</div>
@@ -20,16 +20,22 @@
     <div class="search-history" v-show="isShowHistory">
       <div class="ht-title">搜索历史</div>
       <div class="ht-item">
-        <div class="item-box">
-          <span>xxxxx</span>
-          <van-icon name="cross" />
-        </div>
-        <div class="item-box">
-          <span>xxxxx</span>
-          <van-icon name="cross" />
+        <div
+          class="item-box"
+          v-for="(item, index) in searchShopHistory"
+          :key="index"
+        >
+          <span @click="searchHistoryFood(item)">{{ item }}</span>
+          <van-icon name="cross" @click="delSearchHistory(index)" />
         </div>
       </div>
-      <div class="clear-history">清空搜索历史</div>
+      <div
+        class="clear-history"
+        @click="delAllSearchHistory"
+        v-show="searchShopHistory.length > 0"
+      >
+        清空搜索历史
+      </div>
     </div>
 
     <!-- 搜索结果 -->
@@ -40,6 +46,7 @@
           class="item"
           v-for="(item, index) in searchShopResult"
           :key="index"
+          @click="goShop"
         >
           <img src="../assets/image/shop-img.jpg" alt="" />
           <div class="item-info">
@@ -99,7 +106,31 @@ export default {
       this.$router.go(-1)
     },
     async searchFood () {
+      if (this.inputfood === '') {
+        alert('不能为空')
+        return
+      }
       const date = { geohash: this.gethash, keyword: this.inputfood }
+      const res = await searchShopping(date)
+      console.log(res)
+      this.isShowHistory = false
+      this.searchShopResult = res
+      this.searchShopHistory.push(this.inputfood)
+      localStorage.setItem('searchHistoryTitle', JSON.stringify(this.searchShopHistory))
+    },
+    delSearchHistory (nub) {
+      this.searchShopHistory.splice(nub, 1)
+      localStorage.setItem('searchHistoryTitle', JSON.stringify(this.searchShopHistory))
+    },
+    delAllSearchHistory () {
+      this.searchShopHistory = []
+      localStorage.setItem('searchHistoryTitle', JSON.stringify(this.searchShopHistory))
+    },
+    goShop () {
+      this.$router.push({ path: '/shop' })
+    },
+    async searchHistoryFood (value) {
+      const date = { geohash: this.gethash, keyword: value }
       const res = await searchShopping(date)
       console.log(res)
       this.isShowHistory = false
@@ -108,6 +139,12 @@ export default {
   },
   mounted () {
     this.gethash = this.$store.state.geohash
+
+    if (localStorage.getItem('searchHistoryTitle') == null) {
+      localStorage.setItem('searchHistoryTitle', JSON.stringify([]))
+    } else {
+      this.searchShopHistory = JSON.parse(localStorage.getItem('searchHistoryTitle'))
+    }
   }
 }
 </script>
@@ -183,6 +220,11 @@ export default {
       background-color: #fff;
       padding: 0 10px;
       border-bottom: 1px solid #e4e4e4;
+      span {
+        flex: 1;
+        height: 100%;
+        line-height: 45px;
+      }
     }
   }
 
@@ -196,6 +238,7 @@ export default {
 }
 
 .search-result {
+  margin-bottom: 45px;
   .ht-title {
     height: 46px;
     line-height: 46px;
