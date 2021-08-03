@@ -61,7 +61,8 @@
       <div class="title">
         <img src="../assets/image/附近商店.png" alt="" /><span>附近商家</span>
       </div>
-      <div class="shop-item" v-for="(item, index) in shoppingList" :key="index">
+      <shop-list :shoppingList="shoppingList"></shop-list>
+      <!-- <div class="shop-item" v-for="(item, index) in shoppingList" :key="index">
         <div class="shop-img">
           <img :src="shoppingImageUrl + item.image_path" loading="lazy" />
         </div>
@@ -104,7 +105,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- 底部 -->
     <p v-if="hasShopData" class="empty_data">没有更多了</p>
@@ -126,8 +127,9 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import { foodclass, shoppinglist } from '../assets/js/api'
 import loading from '../components/loading.vue'
-import Rate from 'vant/lib/rate'
-import 'vant/lib/rate/style'
+// import Rate from 'vant/lib/rate'
+// import 'vant/lib/rate/style'
+import ShopList from '../components/ShopList.vue'
 
 export default {
   data () {
@@ -171,7 +173,8 @@ export default {
     swiper,
     swiperSlide,
     loading,
-    [Rate.name]: Rate
+    ShopList
+    // [Rate.name]: Rate
   },
   computed: {
   },
