@@ -31,200 +31,206 @@
       </div>
     </div>
 
-    <!-- 分类 -->
-    <div class="food-class-container" v-show="num === 1">
-      <div class="class-box">
-        <div class="box-item box-left">
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />异国料理</span>
-            <div class="num-box">
-              <span class="class-num">9999</span>
+    <transition name="showlist">
+      <!-- 分类 -->
+      <div class="food-class-container" v-show="num === 1">
+        <div class="class-box">
+          <div class="box-item box-left">
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />异国料理</span>
+              <div class="num-box">
+                <span class="class-num">9999</span>
+              </div>
+            </div>
+            <div class="item active">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
+            </div>
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
+            </div>
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
+            </div>
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
+            </div>
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
+            </div>
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
+            </div>
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
+            </div>
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
+            </div>
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
+            </div>
+            <div class="item">
+              <span class="class-name"><van-icon name="fire-o" />快餐</span>
+              <div class="num-box">
+                <span class="class-num">111</span>
+                <van-icon name="arrow" size="12" />
+              </div>
             </div>
           </div>
-          <div class="item active">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
+          <div class="box-item box-right">
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
             </div>
-          </div>
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
             </div>
-          </div>
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
             </div>
-          </div>
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
             </div>
-          </div>
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
             </div>
-          </div>
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
             </div>
-          </div>
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
             </div>
-          </div>
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
             </div>
-          </div>
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
             </div>
-          </div>
-          <div class="item">
-            <span class="class-name"><van-icon name="fire-o" />快餐</span>
-            <div class="num-box">
-              <span class="class-num">111</span>
-              <van-icon name="arrow" size="12" />
-            </div>
-          </div>
-        </div>
-        <div class="box-item box-right">
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
-          </div>
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
-          </div>
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
-          </div>
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
-          </div>
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
-          </div>
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
-          </div>
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
-          </div>
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
-          </div>
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
-          </div>
 
-          <div class="item">
-            <span class="food-class-name">简餐</span>
-            <span class="fcn-num">2222</span>
+            <div class="item">
+              <span class="food-class-name">简餐</span>
+              <span class="fcn-num">2222</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
 
-    <!-- 排序 -->
-    <div class="sort-container" v-show="num === 2">
-      <div class="sort-item">
-        <van-icon name="chat-o" color="#ee0a24" />
-        <div class="sort-name">智能排序</div>
+    <transition name="showlist">
+      <!-- 排序 -->
+      <div class="sort-container" v-show="num === 2">
+        <div class="sort-item">
+          <van-icon name="chat-o" color="#ee0a24" />
+          <div class="sort-name">智能排序</div>
+        </div>
+        <div class="sort-item">
+          <van-icon name="chat-o" color="#ee0a24" />
+          <div class="sort-name">智能排序</div>
+        </div>
+        <div class="sort-item">
+          <van-icon name="chat-o" color="#ee0a24" />
+          <div class="sort-name">智能排序</div>
+        </div>
+        <div class="sort-item">
+          <van-icon name="chat-o" color="#ee0a24" />
+          <div class="sort-name">智能排序</div>
+        </div>
+        <div class="sort-item">
+          <van-icon name="chat-o" color="#ee0a24" />
+          <div class="sort-name">智能排序</div>
+        </div>
+        <div class="sort-item">
+          <van-icon name="chat-o" color="#ee0a24" />
+          <div class="sort-name">智能排序</div>
+        </div>
       </div>
-      <div class="sort-item">
-        <van-icon name="chat-o" color="#ee0a24" />
-        <div class="sort-name">智能排序</div>
-      </div>
-      <div class="sort-item">
-        <van-icon name="chat-o" color="#ee0a24" />
-        <div class="sort-name">智能排序</div>
-      </div>
-      <div class="sort-item">
-        <van-icon name="chat-o" color="#ee0a24" />
-        <div class="sort-name">智能排序</div>
-      </div>
-      <div class="sort-item">
-        <van-icon name="chat-o" color="#ee0a24" />
-        <div class="sort-name">智能排序</div>
-      </div>
-      <div class="sort-item">
-        <van-icon name="chat-o" color="#ee0a24" />
-        <div class="sort-name">智能排序</div>
-      </div>
-    </div>
+    </transition>
 
-    <!-- 筛选 -->
-    <div class="screen-container" v-show="num === 3">
-      <div class="screen-box">
-        <div class="box-item">
-          <h3>配送方式</h3>
-          <div class="item-list">
-            <div class="item">
-              <van-icon name="chat-o" color="#ee0a24" />
-              蜂鸟专送
+    <transition name="showlist">
+      <!-- 筛选 -->
+      <div class="screen-container" v-show="num === 3">
+        <div class="screen-box">
+          <div class="box-item">
+            <h3>配送方式</h3>
+            <div class="item-list">
+              <div class="item">
+                <van-icon name="chat-o" color="#ee0a24" />
+                蜂鸟专送
+              </div>
+            </div>
+          </div>
+          <div class="box-item">
+            <h3>配送方式</h3>
+            <div class="item-list">
+              <div class="item">
+                <van-icon name="chat-o" color="#ee0a24" />
+                蜂鸟专送
+              </div>
+              <div class="item">
+                <van-icon name="chat-o" color="#ee0a24" />
+                蜂鸟专送
+              </div>
+              <div class="item">
+                <van-icon name="chat-o" color="#ee0a24" />
+                蜂鸟专送
+              </div>
+              <div class="item">
+                <van-icon name="chat-o" color="#ee0a24" />
+                蜂鸟专送
+              </div>
             </div>
           </div>
         </div>
-        <div class="box-item">
-          <h3>配送方式</h3>
-          <div class="item-list">
-            <div class="item">
-              <van-icon name="chat-o" color="#ee0a24" />
-              蜂鸟专送
-            </div>
-            <div class="item">
-              <van-icon name="chat-o" color="#ee0a24" />
-              蜂鸟专送
-            </div>
-            <div class="item">
-              <van-icon name="chat-o" color="#ee0a24" />
-              蜂鸟专送
-            </div>
-            <div class="item">
-              <van-icon name="chat-o" color="#ee0a24" />
-              蜂鸟专送
-            </div>
-          </div>
+        <div class="screen-btn">
+          <div class="btn-item btn-clear">清空</div>
+          <div class="btn-item btn-ok">确定</div>
         </div>
       </div>
-      <div class="screen-btn">
-        <div class="btn-item btn-clear">清空</div>
-        <div class="btn-item btn-ok">确定</div>
-      </div>
-    </div>
+    </transition>
 
     <!-- 店铺列表 -->
     <shop-list :shoppingList="shoppingList" class="shop-list"></shop-list>
@@ -332,7 +338,7 @@ export default {
   background-color: #fff;
   border-bottom: 0.025rem solid #f1f1f1;
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   left: 0;
   right: 0;
   top: 45px;
@@ -517,5 +523,16 @@ export default {
 
 .shop-list {
   margin-top: 82px;
+}
+
+.showlist-enter-active,
+.showlist-leave-active {
+  transition: all 0.3s;
+  transform: translateY(0);
+}
+.showlist-enter,
+.showlist-leave-active {
+  opacity: 0;
+  transform: translateY(-100%);
 }
 </style>
