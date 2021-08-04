@@ -18,7 +18,19 @@
     >
       <swiper-slide v-for="(item, index) in foodClassList" :key="index">
         <div class="msite-food-cf">
-          <div class="food-cf-item" v-for="fooditem in item" :key="fooditem.id">
+          <div
+            class="food-cf-item"
+            v-for="fooditem in item"
+            :key="fooditem.id"
+            @click="
+              goFood(
+                latitude,
+                longitude,
+                fooditem.title,
+                getCategoryId(fooditem.link)
+              )
+            "
+          >
             <img :src="foodClassImageUrl + fooditem.image_url" alt="" />
             <p>{{ fooditem.title }}</p>
           </div>
@@ -260,6 +272,18 @@ export default {
         this.showBackStatus = true
       } else {
         this.showBackStatus = false
+      }
+    },
+    goFood (latitude, longitude, title, id) {
+      this.$router.push({ path: '/food', query: { latitude: latitude, longitude: longitude, title: title, id: id } })
+    },
+    // 解码url地址，求去restaurant_category_id值
+    getCategoryId (url) {
+      const urlData = decodeURIComponent(url.split('=')[1].replace('&target_name', ''))
+      if (/restaurant_category_id/gi.test(urlData)) {
+        return JSON.parse(urlData).restaurant_category_id.id
+      } else {
+        return ''
       }
     }
   },

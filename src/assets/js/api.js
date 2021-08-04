@@ -52,3 +52,9 @@ export const shoppinglist = (data) => {
 export const searchShopping = (data) => {
   return get('/api2/v4/restaurants', data)
 }
+
+// 获取所有商铺分类列表
+
+export const shopclasslist = (data) => {
+  return get('/api2/shopping/v2/restaurant/category', data)
+}
