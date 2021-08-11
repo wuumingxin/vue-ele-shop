@@ -75,11 +75,11 @@
 import NavBar from '../components/NavBar.vue'
 import TabBar from '../components/TabBar.vue'
 
-import Icon from 'vant/lib/icon'
-import 'vant/lib/icon/style'
+// import Icon from 'vant/lib/icon'
+// import 'vant/lib/icon/style'
 
-import Tag from 'vant/lib/tag'
-import 'vant/lib/tag/style'
+// import Tag from 'vant/lib/tag'
+// import 'vant/lib/tag/style'
 
 import { searchShopping } from '../assets/js/api'
 
@@ -97,9 +97,9 @@ export default {
   },
   components: {
     NavBar,
-    TabBar,
-    [Icon.name]: Icon,
-    [Tag.name]: Tag
+    TabBar
+    // [Icon.name]: Icon,
+    // [Tag.name]: Tag
   },
   methods: {
     goBack () {

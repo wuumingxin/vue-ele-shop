@@ -18,7 +18,19 @@
     >
       <swiper-slide v-for="(item, index) in foodClassList" :key="index">
         <div class="msite-food-cf">
-          <div class="food-cf-item" v-for="fooditem in item" :key="fooditem.id">
+          <div
+            class="food-cf-item"
+            v-for="fooditem in item"
+            :key="fooditem.id"
+            @click="
+              goFood(
+                latitude,
+                longitude,
+                fooditem.title,
+                getCategoryId(fooditem.link)
+              )
+            "
+          >
             <img :src="foodClassImageUrl + fooditem.image_url" alt="" />
             <p>{{ fooditem.title }}</p>
           </div>
@@ -61,7 +73,8 @@
       <div class="title">
         <img src="../assets/image/附近商店.png" alt="" /><span>附近商家</span>
       </div>
-      <div class="shop-item" v-for="(item, index) in shoppingList" :key="index">
+      <shop-list :shoppingList="shoppingList"></shop-list>
+      <!-- <div class="shop-item" v-for="(item, index) in shoppingList" :key="index">
         <div class="shop-img">
           <img :src="shoppingImageUrl + item.image_path" loading="lazy" />
         </div>
@@ -104,7 +117,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- 底部 -->
     <p v-if="hasShopData" class="empty_data">没有更多了</p>
@@ -126,8 +139,9 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import { foodclass, shoppinglist } from '../assets/js/api'
 import loading from '../components/loading.vue'
-import Rate from 'vant/lib/rate'
-import 'vant/lib/rate/style'
+// import Rate from 'vant/lib/rate'
+// import 'vant/lib/rate/style'
+import ShopList from '../components/ShopList.vue'
 
 export default {
   data () {
@@ -171,7 +185,8 @@ export default {
     swiper,
     swiperSlide,
     loading,
-    [Rate.name]: Rate
+    ShopList
+    // [Rate.name]: Rate
   },
   computed: {
   },
@@ -257,6 +272,18 @@ export default {
         this.showBackStatus = true
       } else {
         this.showBackStatus = false
+      }
+    },
+    goFood (latitude, longitude, title, id) {
+      this.$router.push({ path: '/food', query: { latitude: latitude, longitude: longitude, title: title, id: id } })
+    },
+    // 解码url地址，求去restaurant_category_id值
+    getCategoryId (url) {
+      const urlData = decodeURIComponent(url.split('=')[1].replace('&target_name', ''))
+      if (/restaurant_category_id/gi.test(urlData)) {
+        return JSON.parse(urlData).restaurant_category_id.id
+      } else {
+        return ''
       }
     }
   },

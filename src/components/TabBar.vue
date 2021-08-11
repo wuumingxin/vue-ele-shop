@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import Icon from 'vant/lib/icon'
-import 'vant/lib/icon/style'
+// import Icon from 'vant/lib/icon'
+// import 'vant/lib/icon/style'
 
 import { mapState } from 'vuex'
 
@@ -32,7 +32,7 @@ export default {
     }
   },
   components: {
-    [Icon.name]: Icon
+    // [Icon.name]: Icon
   },
   methods: {
     goSearch () {
