@@ -36,108 +36,136 @@
       </div>
       <div class="right">
         <div class="item-box">
-          <div class="item-title" id="a">测试aaaa</div>
+          <div class="item-title" id="a">无内鬼</div>
           <div class="item-container">
-            <div class="item">
-              <div class="logo">
-                <img src="" alt="" />
+            <div class="top">
+              <div class="img-box">
+                <img src="../assets/image/shop-img.jpg" alt="" />
               </div>
-              <div class="info">
-                <div class="h1">ddd</div>
-                <div class="yueshou">xxxxxxx</div>
-                <div>$3333</div>
-              </div>
-              <div class="add-icon-box">
-                <div class="add-icon">+</div>
+              <div class="top-info">
+                <div class="h2">ddd</div>
+                <div class="xiaoliang">xxxxxxx</div>
               </div>
             </div>
+            <div class="footer">
+              <div class="money">$<span>20</span></div>
+              <div class="add-icon">+</div>
+            </div>
           </div>
+
           <div class="item-container">
-            <div class="item">xxxxxxx</div>
+            <div class="top">
+              <div class="img-box">
+                <img src="../assets/image/shop-img.jpg" alt="" />
+              </div>
+              <div class="top-info">
+                <div class="h2">ddd</div>
+                <div class="xiaoliang">xxxxxxx</div>
+              </div>
+            </div>
+            <div class="footer">
+              <div class="money">$<span>20</span></div>
+              <div class="add-icon">+</div>
+            </div>
+          </div>
+
+          <div class="item-container">
+            <div class="top">
+              <div class="img-box">
+                <img src="../assets/image/shop-img.jpg" alt="" />
+              </div>
+              <div class="top-info">
+                <div class="h2">ddd</div>
+                <div class="xiaoliang">xxxxxxx</div>
+              </div>
+            </div>
+            <div class="footer">
+              <div class="money">$<span>20</span></div>
+              <div class="add-icon">+</div>
+            </div>
+          </div>
+
+          <div class="item-container">
+            <div class="top">
+              <div class="img-box">
+                <img src="../assets/image/shop-img.jpg" alt="" />
+              </div>
+              <div class="top-info">
+                <div class="h2">ddd</div>
+                <div class="xiaoliang">xxxxxxx</div>
+              </div>
+            </div>
+            <div class="footer">
+              <div class="money">$<span>20</span></div>
+              <div class="add-icon">+</div>
+            </div>
+          </div>
+
+          <div class="item-container">
+            <div class="top">
+              <div class="img-box">
+                <img src="../assets/image/shop-img.jpg" alt="" />
+              </div>
+              <div class="top-info">
+                <div class="h2">ddd</div>
+                <div class="xiaoliang">xxxxxxx</div>
+              </div>
+            </div>
+            <div class="footer">
+              <div class="money">$<span>20</span></div>
+              <div class="add-icon">+</div>
+            </div>
+          </div>
+
+          <div class="item-container">
+            <div class="top">
+              <div class="img-box">
+                <img src="../assets/image/shop-img.jpg" alt="" />
+              </div>
+              <div class="top-info">
+                <div class="h2">ddd</div>
+                <div class="xiaoliang">xxxxxxx</div>
+              </div>
+            </div>
+            <div class="footer">
+              <div class="money">$<span>20</span></div>
+              <div class="add-icon">+</div>
+            </div>
+          </div>
+
+          <div class="item-container">
+            <div class="top">
+              <div class="img-box">
+                <img src="../assets/image/shop-img.jpg" alt="" />
+              </div>
+              <div class="top-info">
+                <div class="h2">ddd</div>
+                <div class="xiaoliang">xxxxxxx</div>
+              </div>
+            </div>
+            <div class="footer">
+              <div class="money">$<span>20</span></div>
+              <div class="add-icon">+</div>
+            </div>
           </div>
         </div>
+
         <div class="item-box">
-          <div class="item-title">测试xxx</div>
+          <div class="item-title" id="b">无内鬼</div>
           <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title" id="b">测试bbb</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title" id="">测试bbbbb</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title">测试xxx</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
-          </div>
-        </div>
-        <div class="item-box">
-          <div class="item-title" id="c">测试c</div>
-          <div class="item-container">
-            <div class="item">xxxxxxx</div>
+            <div class="top">
+              <div class="img-box">
+                <img src="../assets/image/shop-img.jpg" alt="" />
+              </div>
+              <div class="top-info">
+                <div class="h2">ddd</div>
+                <div class="xiaoliang">xxxxxxx</div>
+              </div>
+            </div>
+            <div class="footer">
+              <div class="money">$<span>20</span></div>
+              <div class="add-icon">+</div>
+            </div>
           </div>
         </div>
       </div>
@@ -228,9 +256,21 @@ export default {
       }
     }
     .right {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      line-height: 20px;
+      height: 20px;
+      span {
+        height: 100%;
+        line-height: 20px;
+        display: inline-block;
+      }
+      .van-icon {
+        height: 20px;
+        line-height: 20px;
+        vertical-align: middle;
+      }
     }
   }
 }
@@ -282,11 +322,63 @@ export default {
     .item-box {
       .item-title {
         padding: 10px;
+        color: #666;
+        font-weight: 700;
+        font-size: 16px;
       }
       .item-container {
         background-color: #fff;
         padding: 10px;
         border-bottom: 1px solid #f8f8f8;
+        .top {
+          display: flex;
+          margin-bottom: 10px;
+          .img-box {
+            width: 46px;
+            height: 46px;
+            margin-right: 10px;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .top-info {
+            flex: 1;
+            height: 46px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .h2 {
+              font-size: 16px;
+            }
+            .xiaoliang {
+              font-size: 12px;
+            }
+          }
+        }
+        .footer {
+          display: flex;
+          justify-content: space-between;
+          margin-left: 56px;
+          .money {
+            color: #f60;
+            font-size: 12px;
+            span {
+              font-size: 16px;
+
+              font-weight: 700;
+            }
+          }
+          .add-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: #3190e8;
+            color: #fff;
+            line-height: 18px;
+            text-align: center;
+          }
+        }
       }
     }
   }
