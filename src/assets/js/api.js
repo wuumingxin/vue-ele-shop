@@ -70,3 +70,14 @@ export const deliverymodes = (data) => {
 export const activityattributes = (data) => {
   return get('/api2/shopping/v1/restaurants/activity_attributes', data)
 }
+
+// 餐馆详情
+export const restaurantInfo = (data, shopid) => {
+  return get(`/api2/shopping/restaurant/${shopid}`, data)
+}
+
+// 获取食品列表
+
+export const foodmenu = (data) => {
+  return get('/api2/shopping/v2/menu', data)
+}

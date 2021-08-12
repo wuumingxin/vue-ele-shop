@@ -7,9 +7,11 @@
           <img src="../assets/image/shop-img.jpg" alt="" />
         </div>
         <div class="shop-info-center">
-          <div class="h1">蜜雪冰城</div>
-          <div class="peisong">xxxxxxxxxxx</div>
-          <div class="message">xxxxxxxxxxxxxxx</div>
+          <div class="h1">{{ restaurantObj.name }}</div>
+          <div class="peisong" v-if="restaurantObj.piecewise_agent_fee">
+            商家配送/分钟送达/{{ restaurantObj.piecewise_agent_fee.tips }}
+          </div>
+          <div class="message">公告：{{ restaurantObj.promotion_info }}</div>
         </div>
         <div class="shop-info-right">
           <van-icon name="arrow" />
@@ -18,9 +20,15 @@
       <div class="shop-live">
         <div class="left">
           <span class="logo">减</span>
-          <span>xxxxxxxxx</span>
+          <span v-if="restaurantObj.activities">{{
+            restaurantObj.activities[0].description
+          }}</span>
         </div>
-        <div class="right"><span>xxxxxxx</span><van-icon name="arrow" /></div>
+        <div class="right">
+          <span v-if="restaurantObj.activities"
+            >{{ restaurantObj.activities.length }}个活动</span
+          ><van-icon name="arrow" />
+        </div>
       </div>
     </div>
     <!-- 商品评价切换栏 -->
@@ -31,105 +39,53 @@
 
     <div class="shop-list">
       <div class="left">
-        <div class="item-title active" @click="go('a')">测试1</div>
-        <div class="item-title" @click="go('b')">测试2</div>
+        <div
+          class="item-title active"
+          @click="go(item.name)"
+          v-for="(item, index) in foodMenuList"
+          :key="index"
+        >
+          {{ item.name }}
+        </div>
       </div>
       <div class="right">
-        <div class="item-box">
-          <div class="item-title" id="a">无内鬼</div>
-          <div class="item-container">
-            <div class="top">
-              <div class="img-box">
-                <img src="../assets/image/shop-img.jpg" alt="" />
-              </div>
-              <div class="top-info">
-                <div class="h2">ddd</div>
-                <div class="xiaoliang">xxxxxxx</div>
-              </div>
-            </div>
-            <div class="footer">
-              <div class="money">$<span>20</span></div>
-              <div class="add-icon">+</div>
-            </div>
+        <div
+          class="item-box"
+          v-for="(item, index) in foodMenuList"
+          :key="index"
+        >
+          <div class="item-title" :id="item.name">
+            {{ item.name }} <span>{{ item.description }}</span>
           </div>
-
-          <div class="item-container">
+          <div
+            class="item-container"
+            v-for="(fooditem, index) in item.foods"
+            :key="index"
+          >
             <div class="top">
               <div class="img-box">
                 <img src="../assets/image/shop-img.jpg" alt="" />
               </div>
               <div class="top-info">
-                <div class="h2">ddd</div>
-                <div class="xiaoliang">xxxxxxx</div>
+                <div class="h2">{{ fooditem.name }}</div>
+                <div class="xiaoliang">
+                  月售{{ fooditem.month_sales }}份 好评率{{
+                    parseInt((fooditem.rating / 5) * 100)
+                  }}%
+                </div>
               </div>
             </div>
             <div class="footer">
-              <div class="money">$<span>20</span></div>
-              <div class="add-icon">+</div>
-            </div>
-          </div>
-
-          <div class="item-container">
-            <div class="top">
-              <div class="img-box">
-                <img src="../assets/image/shop-img.jpg" alt="" />
+              <div class="money">
+                ￥<span>{{ fooditem.specfoods[0].price }}</span>
+                <span v-if="fooditem.specfoods.length > 1">起</span>
               </div>
-              <div class="top-info">
-                <div class="h2">ddd</div>
-                <div class="xiaoliang">xxxxxxx</div>
+              <div class="add-icon" v-if="fooditem.specfoods.length == 1">
+                +
               </div>
-            </div>
-            <div class="footer">
-              <div class="money">$<span>20</span></div>
-              <div class="add-icon">+</div>
-            </div>
-          </div>
-
-          <div class="item-container">
-            <div class="top">
-              <div class="img-box">
-                <img src="../assets/image/shop-img.jpg" alt="" />
+              <div class="add-text" v-if="fooditem.specfoods.length > 1">
+                选规格
               </div>
-              <div class="top-info">
-                <div class="h2">ddd</div>
-                <div class="xiaoliang">xxxxxxx</div>
-              </div>
-            </div>
-            <div class="footer">
-              <div class="money">$<span>20</span></div>
-              <div class="add-icon">+</div>
-            </div>
-          </div>
-
-          <div class="item-container">
-            <div class="top">
-              <div class="img-box">
-                <img src="../assets/image/shop-img.jpg" alt="" />
-              </div>
-              <div class="top-info">
-                <div class="h2">ddd</div>
-                <div class="xiaoliang">xxxxxxx</div>
-              </div>
-            </div>
-            <div class="footer">
-              <div class="money">$<span>20</span></div>
-              <div class="add-icon">+</div>
-            </div>
-          </div>
-
-          <div class="item-container">
-            <div class="top">
-              <div class="img-box">
-                <img src="../assets/image/shop-img.jpg" alt="" />
-              </div>
-              <div class="top-info">
-                <div class="h2">ddd</div>
-                <div class="xiaoliang">xxxxxxx</div>
-              </div>
-            </div>
-            <div class="footer">
-              <div class="money">$<span>20</span></div>
-              <div class="add-icon">+</div>
             </div>
           </div>
 
@@ -170,13 +126,29 @@
         </div>
       </div>
     </div>
+    <!-- footer -->
+    <div class="shop-footer">
+      <div class="shopcar-icon">
+        <van-icon name="shopping-cart-o" size="28" color="#fff" />
+      </div>
+      <div class="right">
+        <div class="money">
+          <div class="top">xxxxx</div>
+          <div class="bottom">xxxxxxx</div>
+        </div>
+        <div class="jiesuan">xxxxxx</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { restaurantInfo, foodmenu } from '../assets/js/api'
 export default {
   data () {
     return {
+      restaurantObj: {},
+      foodMenuList: []
 
     }
   },
@@ -185,7 +157,23 @@ export default {
   methods: {
     go (value) {
       document.querySelector('#' + value).scrollIntoView(true)
+    },
+    // 获取餐馆的信息
+    async getRestaurant () {
+      const res = await restaurantInfo({}, 3269)
+      // console.log(res, 'ddddd')
+      this.restaurantObj = res
+    },
+    // 获取食品列表
+    async getFoodMenu () {
+      const res = await foodmenu({ restaurant_id: 3269 })
+      console.log(res, 'aaa')
+      this.foodMenuList = res
     }
+  },
+  mounted () {
+    this.getRestaurant()
+    this.getFoodMenu()
   }
 }
 </script>
@@ -308,6 +296,7 @@ export default {
   .left {
     flex-basis: 89px;
     overflow-y: auto;
+    font-size: 14px;
     .item-title {
       padding: 16px 7px;
     }
@@ -325,6 +314,9 @@ export default {
         color: #666;
         font-weight: 700;
         font-size: 16px;
+        span {
+          font-size: 9px;
+        }
       }
       .item-container {
         background-color: #fff;
@@ -378,8 +370,63 @@ export default {
             line-height: 18px;
             text-align: center;
           }
+          .add-text {
+            background-color: #3190e8;
+            color: #fff;
+            font-size: 13px;
+            padding: 2px 5px;
+            border-radius: 10%;
+          }
         }
       }
+    }
+  }
+}
+
+.shop-footer {
+  height: 46px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #3d3d3f;
+  display: flex;
+  justify-content: space-between;
+  .shopcar-icon {
+    width: 54px;
+    height: 54px;
+    background-color: #3d3d3f;
+    border-radius: 50%;
+    margin-top: -20px;
+    margin-left: 15px;
+    border: 2px solid #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .right {
+    color: #fff;
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 15px;
+    .money {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      .top {
+        font-size: 19px;
+      }
+      .bottom {
+        font-size: 9px;
+      }
+    }
+    .jiesuan {
+      line-height: 46px;
+      width: 117px;
+      background-color: #535356;
+      text-align: center;
+      font-size: 16px;
     }
   }
 }
