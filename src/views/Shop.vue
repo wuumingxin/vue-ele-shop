@@ -40,7 +40,8 @@
     <div class="shop-list">
       <div class="left">
         <div
-          class="item-title active"
+          class="item-title"
+          :class="[isFoodTitleActive == item.name ? 'active' : '']"
           @click="go(item.name)"
           v-for="(item, index) in foodMenuList"
           :key="index"
@@ -64,7 +65,11 @@
           >
             <div class="top">
               <div class="img-box">
-                <img src="../assets/image/shop-img.jpg" alt="" />
+                <img
+                  :src="shopImgPath + fooditem.image_path"
+                  alt=""
+                  loading="lazy"
+                />
               </div>
               <div class="top-info">
                 <div class="h2">{{ fooditem.name }}</div>
@@ -80,8 +85,22 @@
                 ￥<span>{{ fooditem.specfoods[0].price }}</span>
                 <span v-if="fooditem.specfoods.length > 1">起</span>
               </div>
-              <div class="add-icon" v-if="fooditem.specfoods.length == 1">
-                +
+              <div class="add-icon-group" v-if="fooditem.specfoods.length == 1">
+                <div
+                  class="sub-icon"
+                  @click="subShop(fooditem._id)"
+                  v-if="shopCarObj[fooditem._id]"
+                >
+                  <van-icon name="minus" size="14" />
+                </div>
+                <!-- 这里vif有问题。需要修改 -->
+                <div class="num" v-if="shopCarObj[fooditem._id]">222</div>
+                <div
+                  class="add-icon"
+                  @click="addShopCar(fooditem._id, fooditem.specfoods[0])"
+                >
+                  <van-icon name="plus" size="14" />
+                </div>
               </div>
               <div class="add-text" v-if="fooditem.specfoods.length > 1">
                 选规格
@@ -128,15 +147,15 @@
     </div>
     <!-- footer -->
     <div class="shop-footer">
-      <div class="shopcar-icon">
-        <van-icon name="shopping-cart-o" size="28" color="#fff" />
+      <div class="shopcar-icon shopcar-active">
+        <van-icon name="shopping-cart-o" size="30" color="#fff" badge="1" />
       </div>
       <div class="right">
         <div class="money">
-          <div class="top">xxxxx</div>
-          <div class="bottom">xxxxxxx</div>
+          <div class="top">￥20.00</div>
+          <div class="bottom">配送费￥5</div>
         </div>
-        <div class="jiesuan">xxxxxx</div>
+        <div class="jiesuan jiesuan-active">去结算</div>
       </div>
     </div>
   </div>
@@ -148,7 +167,11 @@ export default {
   data () {
     return {
       restaurantObj: {},
-      foodMenuList: []
+      foodMenuList: [],
+      // 左边标题栏是否选中
+      isFoodTitleActive: '',
+      shopImgPath: 'https://elm.cangdu.org/img/',
+      shopCarObj: {}
 
     }
   },
@@ -156,7 +179,13 @@ export default {
   },
   methods: {
     go (value) {
-      document.querySelector('#' + value).scrollIntoView(true)
+      try {
+        document.querySelector('#' + value).scrollIntoView(true)
+      } catch (err) {
+        document.getElementById(value).scrollIntoView(true)
+      }
+
+      this.isFoodTitleActive = value
     },
     // 获取餐馆的信息
     async getRestaurant () {
@@ -169,6 +198,25 @@ export default {
       const res = await foodmenu({ restaurant_id: 3269 })
       console.log(res, 'aaa')
       this.foodMenuList = res
+    },
+    // 加入购物车
+    addShopCar (_id, item) {
+      console.log(_id, item)
+      if (!this.shopCarObj[_id]) {
+        item.count = 1
+        this.shopCarObj[_id] = item
+      }
+      this.shopCarObj[_id].count += 1
+      console.log(this.shopCarObj[_id].count)
+    },
+    // 商品数量减一
+    subShop (_id) {
+      this.shopCarObj[_id].count -= 1
+      if (this.shopCarObj[_id].count === 0) {
+        this.$delete(this.shopCarObj, _id)
+      }
+      // 有问题
+      // console.log(this.shopCarObj[_id].count)
     }
   },
   mounted () {
@@ -297,6 +345,11 @@ export default {
     flex-basis: 89px;
     overflow-y: auto;
     font-size: 14px;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      // width: 0 !important;
+      display: none;
+    }
     .item-title {
       padding: 16px 7px;
     }
@@ -361,14 +414,32 @@ export default {
               font-weight: 700;
             }
           }
-          .add-icon {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background-color: #3190e8;
-            color: #fff;
-            line-height: 18px;
-            text-align: center;
+          .add-icon-group {
+            display: flex;
+            .add-icon {
+              width: 18px;
+              height: 18px;
+              border-radius: 50%;
+              background-color: #3190e8;
+              color: #fff;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .num {
+              margin: 0 10px;
+            }
+            .sub-icon {
+              width: 18px;
+              height: 18px;
+              border-radius: 50%;
+              background-color: #fff;
+              color: #3190e8;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border: 1px solid #3190e8;
+            }
           }
           .add-text {
             background-color: #3190e8;
@@ -396,13 +467,17 @@ export default {
     width: 54px;
     height: 54px;
     background-color: #3d3d3f;
+
     border-radius: 50%;
-    margin-top: -20px;
+    margin-top: -15px;
     margin-left: 15px;
-    border: 2px solid #444;
+    border: 4px solid #444;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .shopcar-active {
+    background-color: #3190e8;
   }
   .right {
     color: #fff;
@@ -427,6 +502,9 @@ export default {
       background-color: #535356;
       text-align: center;
       font-size: 16px;
+    }
+    .jiesuan-active {
+      background-color: #3190e8;
     }
   }
 }
