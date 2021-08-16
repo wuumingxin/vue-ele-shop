@@ -94,7 +94,9 @@
                   <van-icon name="minus" size="14" />
                 </div>
                 <!-- 这里vif有问题。需要修改 -->
-                <div class="num" v-if="showSubMoney(fooditem._id)">222</div>
+                <div class="num" v-if="showSubMoney(fooditem._id)">
+                  {{ shopCarObj[fooditem._id]["count"] }}
+                </div>
                 <div
                   class="add-icon"
                   @click="addShopCar(fooditem._id, fooditem.specfoods[0])"
@@ -148,14 +150,43 @@
     <!-- footer -->
     <div class="shop-footer">
       <div class="shopcar-icon shopcar-active">
-        <van-icon name="shopping-cart-o" size="30" color="#fff" badge="1" />
+        <van-icon
+          name="shopping-cart-o"
+          size="30"
+          color="#fff"
+          :badge="totalShopNum"
+        />
       </div>
       <div class="right">
         <div class="money">
-          <div class="top">￥20.00</div>
+          <div class="top">￥{{ totalAmount }}</div>
           <div class="bottom">配送费￥5</div>
         </div>
         <div class="jiesuan jiesuan-active">去结算</div>
+      </div>
+    </div>
+
+    <!-- 选规格弹出框 -->
+    <div class="guige-model">
+      <div class="guige-box">
+        <div class="top">
+          xxxxxxx
+          <van-icon name="cross" size="20" />
+        </div>
+        <div class="center">
+          <div class="title">规格</div>
+          <div class="item-box">
+            <div class="item">111</div>
+            <div class="item">222</div>
+            <div class="item">111</div>
+            <div class="item">222</div>
+            <div class="item">111</div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="money">￥22</div>
+          <div class="add-shop-car">加入购物车</div>
+        </div>
       </div>
     </div>
   </div>
@@ -201,21 +232,29 @@ export default {
     },
     // 加入购物车
     addShopCar (_id, item) {
-      console.log(_id, item)
+      // console.log(_id, item)
       if (!this.shopCarObj[_id]) {
         item.count = 0
         // this.shopCarObj[_id] = item
         this.$set(this.shopCarObj, _id, item)
       }
       // this.shopCarObj[_id].count += 1
-      const count = this.shopCarObj[_id].count + 1
-      this.$set(this.shopCarObj[_id], 'count', count)
+
+      // const count = this.shopCarObj[_id].count + 1
+      // this.$set(this.shopCarObj[_id], 'count', count)
+
+      this.shopCarObj[_id].count++
+      this.shopCarObj = Object.assign({}, this.shopCarObj)
       console.log(this.shopCarObj[_id].count)
     },
     // 商品数量减一
     subShop (_id) {
-      const count = this.shopCarObj[_id].count - 1
-      this.$set(this.shopCarObj[_id], 'count', count)
+      // const count = this.shopCarObj[_id].count - 1
+      // this.$set(this.shopCarObj[_id], 'count', count)
+
+      this.shopCarObj[_id].count--
+      this.shopCarObj = Object.assign({}, this.shopCarObj)
+
       // this.shopCarObj[_id].count -= 1
       console.log(this.shopCarObj[_id].count)
       if (this.shopCarObj[_id].count === 0) {
@@ -228,6 +267,7 @@ export default {
     this.getFoodMenu()
   },
   computed: {
+    // 单件商品添加的数量
     showSubMoney () {
       return function (value) {
         if (this.shopCarObj[value]) {
@@ -235,6 +275,30 @@ export default {
         } else {
           return 0
         }
+      }
+    },
+    // 总商品数量
+    totalShopNum () {
+      let shopNum = 0
+      if (Object.keys(this.shopCarObj).length !== 0) {
+        for (const i in this.shopCarObj) {
+          shopNum += this.shopCarObj[i].count
+        }
+        return shopNum
+      } else {
+        return 0
+      }
+    },
+    // 总金额
+    totalAmount () {
+      let amount = 0
+      if (Object.keys(this.shopCarObj).length !== 0) {
+        for (const i in this.shopCarObj) {
+          amount += this.shopCarObj[i].count * this.shopCarObj[i].price
+        }
+        return amount
+      } else {
+        return 0
       }
     }
   }
@@ -520,6 +584,86 @@ export default {
     }
     .jiesuan-active {
       background-color: #3190e8;
+    }
+  }
+}
+
+// 规格选中框
+.guige-model {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  position: relative;
+
+  .guige-box {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 260px;
+    background-color: #fff;
+    height: 200px;
+    border: 1px;
+    border-radius: 5px;
+    padding: 10px;
+
+    .top {
+      text-align: center;
+      .van-icon {
+        position: absolute;
+        right: 10px;
+      }
+    }
+
+    .center {
+      margin: 10px 0;
+
+      .title {
+        margin-bottom: 10px;
+      }
+      .item-box {
+        display: flex;
+        flex-wrap: wrap;
+
+        .item {
+          padding: 5px 10px;
+          border: 1px solid;
+          border-color: #3199e8;
+          color: #3199e8;
+          border-radius: 5px;
+          flex-basis: 30%;
+          text-align: center;
+          &:not(:nth-child(3n)) {
+            margin-right: 10px; // 对应D和E
+          }
+          &:nth-child(n + 4) {
+            margin-top: 10px; // 对应F
+          }
+        }
+      }
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f9f9f9;
+      align-items: center;
+      padding: 10px;
+
+      .money {
+        color: #ff6000;
+      }
+      .add-shop-car {
+        background-color: #3199e8;
+        border: 1px solid;
+        padding: 5px 10px;
+        color: #fff;
+        font-size: 14px;
+        border-radius: 5px;
+      }
     }
   }
 }
