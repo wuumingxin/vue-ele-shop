@@ -89,12 +89,12 @@
                 <div
                   class="sub-icon"
                   @click="subShop(fooditem._id)"
-                  v-if="shopCarObj[fooditem._id]"
+                  v-if="showSubMoney(fooditem._id)"
                 >
                   <van-icon name="minus" size="14" />
                 </div>
                 <!-- 这里vif有问题。需要修改 -->
-                <div class="num" v-if="shopCarObj[fooditem._id]">222</div>
+                <div class="num" v-if="showSubMoney(fooditem._id)">222</div>
                 <div
                   class="add-icon"
                   @click="addShopCar(fooditem._id, fooditem.specfoods[0])"
@@ -203,25 +203,40 @@ export default {
     addShopCar (_id, item) {
       console.log(_id, item)
       if (!this.shopCarObj[_id]) {
-        item.count = 1
-        this.shopCarObj[_id] = item
+        item.count = 0
+        // this.shopCarObj[_id] = item
+        this.$set(this.shopCarObj, _id, item)
       }
-      this.shopCarObj[_id].count += 1
+      // this.shopCarObj[_id].count += 1
+      const count = this.shopCarObj[_id].count + 1
+      this.$set(this.shopCarObj[_id], 'count', count)
       console.log(this.shopCarObj[_id].count)
     },
     // 商品数量减一
     subShop (_id) {
-      this.shopCarObj[_id].count -= 1
+      const count = this.shopCarObj[_id].count - 1
+      this.$set(this.shopCarObj[_id], 'count', count)
+      // this.shopCarObj[_id].count -= 1
+      console.log(this.shopCarObj[_id].count)
       if (this.shopCarObj[_id].count === 0) {
         this.$delete(this.shopCarObj, _id)
       }
-      // 有问题
-      // console.log(this.shopCarObj[_id].count)
     }
   },
   mounted () {
     this.getRestaurant()
     this.getFoodMenu()
+  },
+  computed: {
+    showSubMoney () {
+      return function (value) {
+        if (this.shopCarObj[value]) {
+          return this.shopCarObj[value].count
+        } else {
+          return 0
+        }
+      }
+    }
   }
 }
 </script>
