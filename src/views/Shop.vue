@@ -85,7 +85,7 @@
                 ￥<span>{{ fooditem.specfoods[0].price }}</span>
                 <span v-if="fooditem.specfoods.length > 1">起</span>
               </div>
-              <div class="add-icon-group" v-if="fooditem.specfoods.length == 1">
+              <div class="add-icon-group">
                 <div
                   class="sub-icon"
                   @click="subShop(fooditem._id)"
@@ -99,12 +99,17 @@
                 </div>
                 <div
                   class="add-icon"
+                  v-if="fooditem.specfoods.length == 1"
                   @click="addShopCar(fooditem._id, fooditem.specfoods[0])"
                 >
                   <van-icon name="plus" size="14" />
                 </div>
               </div>
-              <div class="add-text" v-if="fooditem.specfoods.length > 1">
+              <div
+                class="add-text"
+                v-if="fooditem.specfoods.length > 1"
+                @click="setIsShowGuige(fooditem.specfoods)"
+              >
                 选规格
               </div>
             </div>
@@ -167,25 +172,36 @@
     </div>
 
     <!-- 选规格弹出框 -->
-    <div class="guige-model">
+    <div class="guige-model" v-show="isShowGuige">
       <div class="guige-box">
         <div class="top">
-          xxxxxxx
-          <van-icon name="cross" size="20" />
+          {{ selectGuigeItem.name }}
+          <van-icon name="cross" size="20" @click="closeGuigeModel" />
         </div>
         <div class="center">
           <div class="title">规格</div>
           <div class="item-box">
-            <div class="item">111</div>
-            <div class="item">222</div>
-            <div class="item">111</div>
-            <div class="item">222</div>
-            <div class="item">111</div>
+            <div
+              class="item"
+              :class="[
+                item.specs_name == selectGuigeItem.specs_name ? 'active' : '',
+              ]"
+              v-for="(item, index) in mostGuigeFoodList"
+              :key="index"
+              @click="selectGuige(item)"
+            >
+              {{ item.specs_name }}
+            </div>
           </div>
         </div>
         <div class="footer">
-          <div class="money">￥22</div>
-          <div class="add-shop-car">加入购物车</div>
+          <div class="money">￥{{ selectGuigeItem.price }}</div>
+          <div
+            class="add-shop-car"
+            @click="addGuigeToShopCar(selectGuigeItem._id, selectGuigeItem)"
+          >
+            加入购物车
+          </div>
         </div>
       </div>
     </div>
@@ -202,7 +218,10 @@ export default {
       // 左边标题栏是否选中
       isFoodTitleActive: '',
       shopImgPath: 'https://elm.cangdu.org/img/',
-      shopCarObj: {}
+      shopCarObj: {},
+      isShowGuige: false,
+      mostGuigeFoodList: [],
+      selectGuigeItem: {}
 
     }
   },
@@ -260,6 +279,38 @@ export default {
       if (this.shopCarObj[_id].count === 0) {
         this.$delete(this.shopCarObj, _id)
       }
+    },
+    setIsShowGuige (itemlist) {
+      this.isShowGuige = true
+      this.mostGuigeFoodList = itemlist
+    },
+    closeGuigeModel () {
+      this.isShowGuige = false
+      this.selectGuigeItem = {}
+    },
+    selectGuige (item) {
+      this.selectGuigeItem = item
+    },
+    // 加入规格商品到购物车
+    addGuigeToShopCar (_id, item) {
+      if (_id === undefined) {
+        return this.$toast('必须选择一件商品添加')
+      }
+      console.log(_id)
+      // console.log(_id, item)
+      if (!this.shopCarObj[_id]) {
+        item.count = 0
+        // this.shopCarObj[_id] = item
+        this.$set(this.shopCarObj, _id, item)
+      }
+      // this.shopCarObj[_id].count += 1
+
+      // const count = this.shopCarObj[_id].count + 1
+      // this.$set(this.shopCarObj[_id], 'count', count)
+
+      this.shopCarObj[_id].count++
+      this.shopCarObj = Object.assign({}, this.shopCarObj)
+      console.log(this.shopCarObj[_id].count)
     }
   },
   mounted () {
@@ -631,8 +682,9 @@ export default {
         .item {
           padding: 5px 10px;
           border: 1px solid;
-          border-color: #3199e8;
-          color: #3199e8;
+          // border-color: #3199e8;
+          border-color: #ddd;
+          // color: #3199e8;
           border-radius: 5px;
           flex-basis: 30%;
           text-align: center;
@@ -642,6 +694,10 @@ export default {
           &:nth-child(n + 4) {
             margin-top: 10px; // 对应F
           }
+        }
+        .active {
+          border-color: #3199e8;
+          color: #3199e8;
         }
       }
     }
