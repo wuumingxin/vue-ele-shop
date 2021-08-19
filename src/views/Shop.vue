@@ -154,7 +154,7 @@
     </div>
     <!-- footer -->
     <div class="shop-footer">
-      <div class="shopcar-icon shopcar-active">
+      <div class="shopcar-icon shopcar-active" @click="setShowShopCar">
         <van-icon
           name="shopping-cart-o"
           size="30"
@@ -205,6 +205,45 @@
         </div>
       </div>
     </div>
+
+    <!-- 购物车列表 -->
+    <div class="shop-car-page" v-show="isShowShopCar">
+      <div class="model" @click="setShowShopCar"></div>
+      <div class="shop-car-list">
+        <div class="top">
+          <div class="title">购物车</div>
+          <div class="clear-shop-car">
+            <van-icon name="delete-o" />
+            <span @click="clarShopCar">清空</span>
+          </div>
+        </div>
+        <div class="item-list">
+          <div
+            class="item"
+            v-for="(item, key, index) in shopCarObj"
+            :key="index"
+          >
+            <div class="shop-name">
+              <div class="big-name">{{ item.name }}</div>
+              <div class="low-name">{{ item.specs_name }}</div>
+            </div>
+            <div class="right">
+              <div class="money">￥{{ item.price }}</div>
+              <div class="add-icon-group">
+                <div class="sub-icon" @click="subShop(key)">
+                  <van-icon name="minus" size="14" />
+                </div>
+                <!-- 这里vif有问题。需要修改 -->
+                <div class="num">{{ item.count }}</div>
+                <div class="add-icon" @click="addShopCar(key, item)">
+                  <van-icon name="plus" size="14" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -221,7 +260,8 @@ export default {
       shopCarObj: {},
       isShowGuige: false,
       mostGuigeFoodList: [],
-      selectGuigeItem: {}
+      selectGuigeItem: {},
+      isShowShopCar: false
 
     }
   },
@@ -311,6 +351,18 @@ export default {
       this.shopCarObj[_id].count++
       this.shopCarObj = Object.assign({}, this.shopCarObj)
       console.log(this.shopCarObj[_id].count)
+    },
+    // 控制购物车显示
+    setShowShopCar () {
+      if (this.isShowShopCar) {
+        this.isShowShopCar = false
+        return
+      }
+      this.isShowShopCar = true
+    },
+    clarShopCar () {
+      this.shopCarObj = {}
+      this.isShowShopCar = false
     }
   },
   mounted () {
@@ -593,6 +645,7 @@ export default {
   background-color: #3d3d3f;
   display: flex;
   justify-content: space-between;
+  z-index: 20;
   .shopcar-icon {
     width: 54px;
     height: 54px;
@@ -719,6 +772,79 @@ export default {
         color: #fff;
         font-size: 14px;
         border-radius: 5px;
+      }
+    }
+  }
+}
+
+.shop-car-page {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 46px;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  .model {
+    flex: 1;
+  }
+  .shop-car-list {
+    .top {
+      display: flex;
+      padding: 10px;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #eceff1;
+      .clear-shop-car {
+        .van-icon {
+          vertical-align: middle;
+        }
+      }
+    }
+    .item-list {
+      background-color: #fff;
+      .item {
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        .right {
+          display: flex;
+          align-items: center;
+          .money {
+            margin-right: 10px;
+            color: #f60;
+            font-weight: 700;
+            font-size: 16px;
+          }
+          .add-icon-group {
+            display: flex;
+            .add-icon {
+              width: 18px;
+              height: 18px;
+              border-radius: 50%;
+              background-color: #3190e8;
+              color: #fff;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .num {
+              margin: 0 10px;
+            }
+            .sub-icon {
+              width: 18px;
+              height: 18px;
+              border-radius: 50%;
+              background-color: #fff;
+              color: #3190e8;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border: 1px solid #3190e8;
+            }
+          }
+        }
       }
     }
   }
